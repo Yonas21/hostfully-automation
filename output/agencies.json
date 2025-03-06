@@ -1,0 +1,25 @@
+{
+    "agencies": [
+        {
+            "uid": "b430d46a-2953-4c2b-a3d1-7d6ab89f56df",
+            "name": "AirSimplicity",
+            "agencyEmailAddress": "onboarding@airsimplicity.co",
+            "phoneNumber": null,
+            "website": null,
+            "address1": null,
+            "city": "Denver",
+            "zipCode": null,
+            "state": null,
+            "currency": "$",
+            "currencyCode": "USD",
+            "countryCode": "US",
+            "defaultCheckInTime": 15,
+            "defaultCheckOutTime": 11,
+            "rentalCondition": null
+        }
+    ],
+    "_metadata": {
+        "count": 1,
+        "totalCount": null
+    }
+}
