@@ -7,4 +7,5 @@ def get_guests(AGENCY_URL, headers, AGENCY_UID):
     return response.json()
 
 
-print(get_guests(API_URL, headers,AGENCY_UID))
+guests_information = get_guests(API_URL, headers, AGENCY_UID)
+print(guests_information)
