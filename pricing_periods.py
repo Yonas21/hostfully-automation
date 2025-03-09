@@ -12,6 +12,14 @@ def get_pricing_periods(api_url, headers, property_id, start_date, end_date):
     else:
         return None
 
+
+def get_bullk_price_periods(api_url, headers, task_id):
+    response = requests.get(
+        f"{api_url}pricing-periods/bulk/{task_id}", headers=headers
+    )
+    return response.json()
+
+
 start_date = "2015-01-01"
 end_date = "2025-11-01"
 pricing_periods = get_pricing_periods(API_URL, headers, PROPERTY_ID, start_date, end_date)
