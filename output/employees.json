@@ -1,0 +1,21 @@
+{
+    "employees": [
+        {
+            "uid": "01e67c5e-3977-4cdb-a95d-bfbea3fafe06",
+            "agencyUid": "b430d46a-2953-4c2b-a3d1-7d6ab89f56df",
+            "bestProfile": "onboarding",
+            "email": "onboarding@airsimplicity.co",
+            "pictureUrl": null,
+            "role": "MANAGER",
+            "firstName": null,
+            "lastName": null,
+            "phoneNumber": null,
+            "phoneAreaCode": 1,
+            "colorCode": "ff9900"
+        }
+    ],
+    "_metadata": {
+        "count": 1,
+        "totalCount": null
+    }
+}
