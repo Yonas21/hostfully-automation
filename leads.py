@@ -1,28 +1,69 @@
 import requests
 from config import API_URL, PROPERTY_ID
 from headers import headers
-
+from writecsv import write_output_to_csv
+from writeJson import writeToJson
 
 def get_leads(api_url, headers, property_id=None, agency_id=None):
-    if property_id:
-        response = requests.get(
-            f"{api_url}/leads?propertyUid={property_id}", headers=headers
-        )
+    try:
+        if property_id:
+            response = requests.get(
+                f"{api_url}/leads?propertyUid={property_id}", headers=headers
+            )
+        elif agency_id:
+            response = requests.get(
+                f"{api_url}/leads?agencyUid={agency_id}", headers=headers
+            )
+        else:
+            return None
+
+        response.raise_for_status()  # Raise an HTTPError for bad responses
         return response.json()
-    elif agency_id:
-        response = requests.get(
-            f"{api_url}/leads?agencyUid={property_id}", headers=headers
-        )
-        return response.json()
-    else:
+    except requests.exceptions.RequestException as err:
+        print(f"Request error: {err}")
+        return None
+    except requests.exceptions.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
+        return None
+    except requests.exceptions.ConnectionError as conn_err:
+        print(f"Error connecting: {conn_err}")
+        return None
+    except requests.exceptions.Timeout as timeout_err:
+        print(f"Timeout error: {timeout_err}")
         return None
 
 
 def lead_by_id(api_url, headers, lead_id):
-    response = requests.get(
-            f"{api_url}/leads/{lead_id}", headers=headers
-        )
-    return response.json()
+    try:
+        response = requests.get(
+                f"{api_url}/leads/{lead_id}", headers=headers
+            )
+        return response.json()
+    except requests.exceptions.RequestException as err:
+        print(f"Request error: {err}")
+        return None
+    except requests.exceptions.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
+        return None
+    except requests.exceptions.ConnectionError as conn_err:
+        print(f"Error connecting: {conn_err}")
+        return None
+    except requests.exceptions.Timeout as timeout_err:
+        print(f"Timeout error: {timeout_err}")
+        return None
 
-leads = get_leads(API_URL, PROPERTY_ID, headers)
+leads = get_leads(API_URL, headers, PROPERTY_ID)
 print("leads: ", leads)
+
+if leads:
+    print("leads: ", leads)
+
+    csv_file_path = "./output/leads.csv"  # TODO: change this to a relative path
+    write_output_to_csv(leads, "leads", csv_file_path)
+    print(f"leads data has been written to {csv_file_path}")
+
+    json_file_path = "./output/leads.json"
+    writeToJson(leads, json_file_path)
+    print(f"leads data has been written to {csv_file_path} and {json_file_path}")
+else:
+    print("No leads found.")
