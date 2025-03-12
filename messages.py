@@ -6,7 +6,8 @@ from writeJson import writeToJson
 
 
 # get messages
-# TODO: implement multiple arguments
+# GET /messages 
+# by changing the arguments agency_id, thread_id, lead_id and all of them are used separately and also you can apply pased by using date filter,limit and cursor too
 def get_messages(api_url, headers, agency_id=None, thread_id=None, lead_id=None, created_at=None, limit=None, cursor=None):
     params = {}
     if agency_id:
@@ -38,7 +39,27 @@ def get_messages(api_url, headers, agency_id=None, thread_id=None, lead_id=None,
     except requests.exceptions.Timeout as timeout_err:
         print(f"Timeout error: {timeout_err}")
         return None
+    
 
+#get individual message by id
+# GET /messages/{message_id}
+def get_message_by_id(api_url, headers, message_id):
+    try:
+        response = requests.get(f"{api_url}/messages/{message_id}", headers=headers)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as err:
+        print(f"Request error: {err}")
+        return None
+    except requests.exceptions.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
+        return None
+    except requests.exceptions.ConnectionError as conn_err:
+        print(f"Error connecting: {conn_err}")
+        return None
+    except requests.exceptions.Timeout as timeout_err:
+        print(f"Timeout error: {timeout_err}")
+        return None
 
 messages = get_messages(API_URL, headers, agency_id=AGENCY_UID, created_at="2025-01-01T00:00:00Z", limit=10)
 

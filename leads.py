@@ -4,6 +4,10 @@ from headers import headers
 from writecsv import write_output_to_csv
 from writeJson import writeToJson
 
+#get all booking information for specific agency and property by id
+# GET /leads
+# GET /leads?propertyUid={property_id}
+# GET /leads?agencyUid={agency_id}
 def get_leads(api_url, headers, property_id=None, agency_id=None):
     try:
         if property_id:
@@ -33,6 +37,8 @@ def get_leads(api_url, headers, property_id=None, agency_id=None):
         return None
 
 
+#get all booking information by id
+# GET /leads/{lead_id}
 def lead_by_id(api_url, headers, lead_id):
     try:
         response = requests.get(
@@ -51,6 +57,8 @@ def lead_by_id(api_url, headers, lead_id):
     except requests.exceptions.Timeout as timeout_err:
         print(f"Timeout error: {timeout_err}")
         return None
+
+
 
 leads = get_leads(API_URL, headers, PROPERTY_ID)
 print("leads: ", leads)
