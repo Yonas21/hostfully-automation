@@ -61,7 +61,7 @@ def get_message_by_id(api_url, headers, message_id):
         print(f"Timeout error: {timeout_err}")
         return None
 
-messages = get_messages(API_URL, headers, agency_id=AGENCY_UID, created_at="2025-01-01T00:00:00Z", limit=10)
+messages = get_messages(API_URL, headers, agency_id=AGENCY_UID, created_at="2019-01-01T00:00:00Z", limit=10)
 
 print("messages at first: ", messages)
 if messages:

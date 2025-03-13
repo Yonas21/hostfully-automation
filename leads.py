@@ -4,23 +4,46 @@ from headers import headers
 from writecsv import write_output_to_csv
 from writeJson import writeToJson
 
-#get all booking information for specific agency and property by id
+
+# get all booking information for specific agency and property by id
 # GET /leads
 # GET /leads?propertyUid={property_id}
 # GET /leads?agencyUid={agency_id}
-def get_leads(api_url, headers, property_id=None, agency_id=None):
+def get_leads(
+    api_url,
+    headers,
+    property_id=None,
+    agency_id=None,
+    checkInFrom=None,
+    checkOutFrom=None,
+    checkInTo=None,
+    checkOutTo=None,
+    limit=None,
+    cursor=None,
+    updatedSince=None,
+):
     try:
+        params = {}
         if property_id:
-            response = requests.get(
-                f"{api_url}/leads?propertyUid={property_id}", headers=headers
-            )
-        elif agency_id:
-            response = requests.get(
-                f"{api_url}/leads?agencyUid={agency_id}", headers=headers
-            )
-        else:
-            return None
+            params['propertyUid'] = property_id
+        if agency_id:
+            params['agencyUid'] = agency_id
+        if checkInFrom:
+            params['checkInFrom'] = checkInFrom
+        if checkOutFrom:
+            params['checkOutFrom'] = checkOutFrom
+        if checkInTo:
+            params['checkInTo'] = checkInTo
+        if checkOutTo:
+            params['checkOutTo'] = checkOutTo
+        if limit:
+            params['limit'] = limit
+        if cursor:
+            params['cursor'] = cursor
+        if updatedSince:
+            params['updatedSince'] = updatedSince
 
+        response = requests.get(f"{api_url}/leads", headers=headers, params=params)
         response.raise_for_status()  # Raise an HTTPError for bad responses
         return response.json()
     except requests.exceptions.RequestException as err:
@@ -37,7 +60,7 @@ def get_leads(api_url, headers, property_id=None, agency_id=None):
         return None
 
 
-#get all booking information by id
+# get all booking information by id
 # GET /leads/{lead_id}
 def lead_by_id(api_url, headers, lead_id):
     try:
@@ -59,8 +82,7 @@ def lead_by_id(api_url, headers, lead_id):
         return None
 
 
-
-leads = get_leads(API_URL, headers, PROPERTY_ID)
+leads = get_leads(API_URL, headers, PROPERTY_ID, updatedSince="2019-01-01T00:00:00Z", limit=10)
 print("leads: ", leads)
 
 if leads:
