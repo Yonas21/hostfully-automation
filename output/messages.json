@@ -1,11 +1,28 @@
 {
-    "messages": [],
-    "_metadata": {
-        "count": 0,
-        "totalCount": null
-    },
-    "_paging": {
-        "_limit": 20,
-        "_nextCursor": null
-    }
+    "messages": [
+        {
+            "propertyName": "Victorian House (Sample)",
+            "createdDate": "March 10, 2025 06:19 PM",
+            "hostfullID": "b430d46a-2953-4c2b-a3d1-7d6ab89f56df",
+            "text": "string"
+        },
+        {
+            "propertyName": "Victorian House (Sample)",
+            "createdDate": "March 11, 2025 06:19 PM",
+            "hostfullID": "b430d46a-2953-4c2b-a3d1-7d6ab89f56df",
+            "text": "string"
+        },
+        {
+            "propertyName": "Victorian House (Sample)",
+            "createdDate": "March 13, 2025 06:19 PM",
+            "hostfullID": "b430d46a-2953-4c2b-a3d1-7d6ab89f56df",
+            "text": "string"
+        },
+        {
+            "propertyName": "Victorian House (Sample)",
+            "createdDate": "March 14, 2025 06:19 PM",
+            "hostfullID": "b430d46a-2953-4c2b-a3d1-7d6ab89f56df",
+            "text": "string"
+        }
+    ]
 }

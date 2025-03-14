@@ -3,6 +3,7 @@ from config import API_URL, PROPERTY_ID
 from headers import headers
 from writecsv import write_output_to_csv
 from writeJson import writeToJson
+import json, datetime
 
 
 # get all booking information for specific agency and property by id
@@ -82,18 +83,43 @@ def lead_by_id(api_url, headers, lead_id):
         return None
 
 
-leads = get_leads(API_URL, headers, PROPERTY_ID, updatedSince="2019-01-01T00:00:00Z", limit=10)
-print("leads: ", leads)
+def format_date(date_str):
+    try:
+        dt = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%fZ")
+        return dt.strftime("%B %d, %Y %I:%M %p")
+    except Exception:
+        return "Unknown Date"
 
-if leads:
-    print("leads: ", leads)
+
+leads = get_leads(API_URL, headers, PROPERTY_ID, updatedSince="2019-01-01T00:00:00Z", limit=10)
+# Filter the leads data
+filtered_leads = {
+    "leads": [
+        {   
+            "propertyUid": lead.get(
+                "propertyUid", "Unknown Property"
+            ),  # Handle missing key
+            "createdDate": format_date(
+                lead.get("metadata", {}).get("createdUtcDateTime", "Unknown Date")
+            ),
+            "guestName": f"{lead.get('guestInformation', {}).get('firstName', 'Unknown')} {lead.get('guestInformation', {}).get('lastName', 'Guest')}",
+            "notes": lead.get("notes", "No Notes"),
+            "email": lead.get("guestInformation", {}).get("email", "Unknown Email"),
+        }
+        for lead in leads.get("leads", [])
+    ]
+}
+print(json.dumps(filtered_leads, indent=4))
+
+if filtered_leads:
+    print("filtered_leads: ", filtered_leads)
 
     csv_file_path = "./output/leads.csv"  # TODO: change this to a relative path
-    write_output_to_csv(leads, "leads", csv_file_path)
+    write_output_to_csv(filtered_leads, "leads", csv_file_path)
     print(f"leads data has been written to {csv_file_path}")
 
     json_file_path = "./output/leads.json"
-    writeToJson(leads, json_file_path)
+    writeToJson(filtered_leads, json_file_path)
     print(f"leads data has been written to {csv_file_path} and {json_file_path}")
 else:
     print("No leads found.")

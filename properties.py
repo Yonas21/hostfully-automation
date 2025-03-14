@@ -61,5 +61,5 @@ def get_property_pricing_rules(api_url, headers, property_id):
 # print("property_description: ", property_description)
 
 
-property_pricing_rules = get_property_pricing_rules(API_URL, headers, PROPERTY_ID)
-print("property_pricing_rules: ", property_pricing_rules)
+# property_pricing_rules = get_property_pricing_rules(API_URL, headers, PROPERTY_ID)
+# print("property_pricing_rules: ", property_pricing_rules)
